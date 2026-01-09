@@ -1798,7 +1798,7 @@
           <div style="font-size:12px;color:#6b7280;margin-bottom:12px">
             <strong>本日:</strong> ${todayHours}
           </div>
-          <button onclick="showShopDetail(${shop.id})" style="width:100%;background:#3b82f6;color:white;padding:10px;border:none;border-radius:12px;font-weight:600;cursor:pointer">詳細・訪問記録</button>
+          <button onclick="showShopDetail('${shop.id}')" style="width:100%;background:#3b82f6;color:white;padding:10px;border:none;border-radius:12px;font-weight:600;cursor:pointer">詳細・訪問記録</button>
         </div>`;
         
         const marker = L.marker([shop.lat, shop.lng], { icon: divIcon })
@@ -1847,7 +1847,7 @@
         const isOpen = isOpenNow(shop.openingHours);
         
         return `
-          <div class="shop-list-item" onclick="focusShop(${shop.id})">
+          <div class="shop-list-item" onclick="focusShop('${shop.id}')">
             <div class="shop-icon ${isVisited ? 'visited' : 'unvisited'}">
               ${isVisited ? '✓' : '🍜'}
             </div>
@@ -2029,7 +2029,7 @@
         }
         
         return `
-          <div class="shop-list-item" onclick="showShopDetail(${shop.id})">
+          <div class="shop-list-item" onclick="showShopDetail('${shop.id}')">
             <div class="shop-icon ${isVisited ? 'visited' : 'unvisited'}">
               ${isVisited ? '✓' : '🍜'}
             </div>
@@ -2104,7 +2104,7 @@
           return bLast.localeCompare(aLast);
         })
         .map(([shopId, visit]) => {
-          const shop = shops.find(s => s.id === parseInt(shopId));
+          const shop = shops.find(s => s.id === shopId);
           const lastVisit = visit.logs[visit.logs.length - 1];
           
           return `
