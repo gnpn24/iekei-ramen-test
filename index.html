@@ -339,6 +339,18 @@
       margin-left: 4px;
     }
     
+    .badge-soon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #f59e0b;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      margin-left: 4px;
+    }
+    
     .badge-want {
       display: inline-flex;
       align-items: center;
@@ -1298,11 +1310,17 @@
           <div class="section-title">ナビゲーション</div>
           <div class="nav-buttons">
             <a class="btn-nav" id="nav-apple" href="#" target="_blank" rel="noopener noreferrer">
-              <span>🍎</span>
+              <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
               <span>Appleマップ</span>
             </a>
             <a class="btn-nav" id="nav-google" href="#" target="_blank" rel="noopener noreferrer">
-              <span>🧭</span>
+              <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
               <span>Google経路案内</span>
             </a>
           </div>
@@ -1312,11 +1330,15 @@
           <div class="section-title">リンク</div>
           <div class="nav-buttons">
             <a class="btn-nav" id="nav-google-map" href="#" target="_blank" rel="noopener noreferrer">
-              <span>🗺️</span>
+              <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+              </svg>
               <span>Googleマップ</span>
             </a>
             <a class="btn-nav" id="nav-website" href="#" target="_blank" rel="noopener noreferrer">
-              <span>🏠</span>
+              <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+              </svg>
               <span>ホームページ</span>
             </a>
           </div>
@@ -1325,7 +1347,12 @@
         <div class="section">
           <div class="section-title">来店情報</div>
           <div class="action-buttons">
-            <button class="btn btn-primary" onclick="openRecordModal()" style="width:100%;">📝 訪問記録</button>
+            <button class="btn btn-primary" onclick="openRecordModal()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;">
+              <svg style="width:18px;height:18px;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              <span>訪問記録</span>
+            </button>
           </div>
           <div class="action-buttons" style="margin-top:8px;">
             <button class="btn btn-want" id="btn-want" onclick="toggleWantToGo()">
@@ -1518,13 +1545,13 @@
         googleMapUrl: "https://www.google.com/maps/place/%E9%B6%B4%E4%B8%80%E5%AE%B6+neo/@35.4694779,139.6208343,15z/data=!4m6!3m5!1s0x60185dd1f76c0b3b:0x56351e864f67679e!8m2!3d35.4694779!4d139.6208343!16s%252Fg%252F11xkgw9v4y?hl=ja",
         websiteUrl: "",
         openingHours: {
-          mon: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          tue: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          wed: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          thu: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          fri: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          sat: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]},
-          sun: {times:[{start:"00:00",end:"07:00"},{start:"10:00",end:"24:00"}]}
+          mon: {times:[{start:"10:00",end:"07:00"}]},
+          tue: {times:[{start:"10:00",end:"07:00"}]},
+          wed: {times:[{start:"10:00",end:"07:00"}]},
+          thu: {times:[{start:"10:00",end:"07:00"}]},
+          fri: {times:[{start:"10:00",end:"07:00"}]},
+          sat: {times:[{start:"10:00",end:"07:00"}]},
+          sun: {times:[{start:"10:00",end:"07:00"}]}
         }
       },
       {
@@ -1539,13 +1566,13 @@
         googleMapUrl: "https://www.google.com/maps/place/%E9%AC%BC%E9%81%93%E5%AE%B6/@38.2645786,140.8666282,16z/data=!4m6!3m5!1s0x5f89877591c28d59:0xf2d316766b1b9666!8m2!3d38.2645786!4d140.8666282!16s%2Fg%2F11bbxlkl66?entry=ttu&g_ep=EgoyMDI2MDEwNi4wIKXMDSoASAFQAw%3D%3D",
         websiteUrl: "https://x.com/kidouya_sendai",
         openingHours: {
-          mon: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"14:30"},{start:"17:00",end:"24:00"}]},
-          tue: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"14:30"},{start:"17:00",end:"24:00"}]},
-          wed: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"14:30"},{start:"17:00",end:"24:00"}]},
-          thu: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"14:30"},{start:"17:00",end:"24:00"}]},
-          fri: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"14:30"},{start:"17:00",end:"24:00"}]},
-          sat: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"15:00"},{start:"15:30",end:"24:00"}]},
-          sun: {times:[{start:"00:00",end:"01:00"},{start:"11:00",end:"15:00"},{start:"15:30",end:"24:00"}]}
+          mon: {times:[{start:"11:00",end:"14:30"},{start:"17:00",end:"01:00"}]},
+          tue: {times:[{start:"11:00",end:"14:30"},{start:"17:00",end:"01:00"}]},
+          wed: {times:[{start:"11:00",end:"14:30"},{start:"17:00",end:"01:00"}]},
+          thu: {times:[{start:"11:00",end:"14:30"},{start:"17:00",end:"01:00"}]},
+          fri: {times:[{start:"11:00",end:"14:30"},{start:"17:00",end:"01:00"}]},
+          sat: {times:[{start:"11:00",end:"15:00"},{start:"15:30",end:"01:00"}]},
+          sun: {times:[{start:"11:00",end:"15:00"},{start:"15:30",end:"01:00"}]}
         }
       }
     ];
@@ -1736,10 +1763,6 @@
       }).addTo(map);
       
       updateMarkers();
-      
-      document.getElementById('filter-category').addEventListener('change', (e) => {
-        renderShopList(e.target.value);
-      });
     }
     
     function initResizeHandle() {
@@ -1908,7 +1931,9 @@
       container.innerHTML = filteredShops.map(shop => {
         const visitData = visits[shop.id];
         const isVisited = visitData?.logs?.length > 0;
-        const isOpen = isOpenNow(shop.openingHours);
+        const openStatus = getOpenStatus(shop.openingHours);
+        const isOpen = openStatus.state !== 'closed';
+        const isSoon = openStatus.state === 'soon';
         const wantToGo = visitData?.wantToGo || false;
         const favorite = visitData?.favorite || false;
         
@@ -1931,7 +1956,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                 </svg>
                 <span style="color:#6b7280;font-size:13px;">${shop.area}</span>
-                ${isOpen ? '<span class="badge-open">営業中</span>' : '<span class="badge-closed">営業時間外</span>'}
+                ${isSoon ? '<span class="badge-soon">閉店間近</span>' : (isOpen ? '<span class="badge-open">営業中</span>' : '<span class="badge-closed">営業時間外</span>')}
                 ${nearbyMode && shop.distance !== undefined ? `<span class="badge-distance">${shop.distance.toFixed(1)}km</span>` : ''}
               </div>
             </div>
@@ -2090,7 +2115,9 @@
       container.innerHTML = filteredShops.map(shop => {
         const visitData = visits[shop.id];
         const isVisited = visitData?.logs?.length > 0;
-        const isOpen = isOpenNow(shop.openingHours);
+        const openStatus = getOpenStatus(shop.openingHours);
+        const isOpen = openStatus.state !== 'closed';
+        const isSoon = openStatus.state === 'soon';
         const todayHours = getTodayHours(shop.openingHours);
         const wantToGo = visitData?.wantToGo || false;
         const favorite = visitData?.favorite || false;
@@ -2122,7 +2149,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                 </svg>
                 <span style="color:#6b7280;font-size:13px;">${shop.area}</span>
-                ${isOpen ? '<span class="badge-open">営業中</span>' : '<span class="badge-closed">営業時間外</span>'}
+                ${isSoon ? '<span class="badge-soon">閉店間近</span>' : (isOpen ? '<span class="badge-open">営業中</span>' : '<span class="badge-closed">営業時間外</span>')}
                 ${nearbyMode && shop.distance !== undefined ? `<span class="badge-distance">${shop.distance.toFixed(1)}km</span>` : ''}
               </div>
               <div style="color:#6b7280;font-size:12px;margin-top:4px;">${hoursText}</div>
@@ -2222,7 +2249,9 @@
       if (!currentShop) return;
       
       const visitData = visits[shopId] || { logs: [], wantToGo: false };
-      const isOpen = isOpenNow(currentShop.openingHours);
+      const openStatus = getOpenStatus(currentShop.openingHours);
+      const isOpen = openStatus.state !== 'closed';
+      const isSoon = openStatus.state === 'soon';
       
       document.getElementById('detail-name').textContent = currentShop.name;
       document.getElementById('detail-category').textContent = currentShop.category;
@@ -2230,7 +2259,10 @@
       document.getElementById('detail-description').textContent = currentShop.description;
       
       const statusBadge = document.getElementById('detail-status-badge');
-      if (isOpen) {
+      if (isSoon) {
+        statusBadge.className = 'badge badge-soon';
+        statusBadge.textContent = '閉店間近';
+      } else if (isOpen) {
         statusBadge.className = 'badge badge-status';
         statusBadge.textContent = '営業中';
       } else {
@@ -2646,100 +2678,76 @@
       return false;
     }
     
-    function saveVisitRecordClick() {
-      // 必須項目のチェック
-      const visitedAt = document.getElementById('input-visited-at').value;
-      if (!visitedAt) {
-        alert('来店日時を入力してください');
-        return;
-      }
-      
-      if (!currentShop) {
-        alert('店舗情報が見つかりません。詳細画面から再度お試しください。');
-        closeRecordModal();
-        return;
-      }
-      
-      const btn = event.target;
-      const originalText = btn.textContent;
-      
-      // ボタンを無効化
-      btn.disabled = true;
-      btn.textContent = '保存中...';
-      btn.style.opacity = '0.6';
-      
-      setTimeout(() => {
-        try {
-          const visitRecord = {
-            shopKey: currentShop.shopKey,
-            visitedAt: visitedAt,
-            waitMinutes: document.getElementById('input-wait').value ? parseInt(document.getElementById('input-wait').value) : null,
-            temperature: document.getElementById('input-temp').value ? parseFloat(document.getElementById('input-temp').value) : null,
-            weather: document.getElementById('input-weather').value || null,
-            rating: currentRating,
-            order: document.getElementById('input-order').value || '',
-            memo: document.getElementById('input-memo').value || '',
-            photo: currentPhoto || null
-          };
-          
-          if (!visits[currentShop.id]) {
-            visits[currentShop.id] = { logs: [], wantToGo: false };
-          }
-          
-          visits[currentShop.id].logs.push(visitRecord);
-          saveVisits();
-          
-          btn.textContent = '✓ 保存完了';
-          btn.style.background = '#10b981';
-          
-          // 画面を更新
-          setTimeout(() => {
-            updateMarkers();
-            renderShopList(document.getElementById('filter-category').value);
-            renderListTab();
-            renderLineageTab();
-            
-            btn.disabled = false;
-            btn.textContent = originalText;
-            btn.style.opacity = '1';
-            btn.style.background = '';
-            
-            closeRecordModal();
-            showShopDetail(currentShop.id);
-          }, 500);
-        } catch (e) {
-          console.error('保存エラー:', e);
-          alert('保存に失敗しました: ' + e.message);
-          btn.disabled = false;
-          btn.textContent = originalText;
-          btn.style.opacity = '1';
-          btn.style.background = '';
-        }
-      }, 100);
-    }
     
     // Utility Functions
+    
+    function parseHHMM(str) {
+      const [h, m] = str.split(':').map(Number);
+      return h * 60 + m;
+    }
+    
+    // 営業ステータスを返す: 'open' | 'soon' | 'closed'
+    // soon: 閉店1時間前
+    function getOpenStatus(openingHours, now = new Date()) {
+      if (!openingHours) return { state: 'closed', closesAt: null };
+      
+      const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+      const todayKey = dayKeys[now.getDay()];
+      const yesterdayKey = dayKeys[(now.getDay() + 6) % 7];
+      
+      const today0 = new Date(now);
+      today0.setHours(0, 0, 0, 0);
+      const today0Ms = today0.getTime();
+      const nowMs = now.getTime();
+      
+      function buildPeriods(dayKey, dayOffset) {
+        const day = openingHours[dayKey];
+        const times = day?.times || [];
+        const baseMs = today0Ms + dayOffset * 24 * 60 * 60 * 1000;
+        
+        return times.map(t => {
+          const startMin = parseHHMM(t.start);
+          const endMin = parseHHMM(t.end);
+          
+          let startMs = baseMs + startMin * 60 * 1000;
+          let endMs = baseMs + endMin * 60 * 1000;
+          
+          // 日付またぎ（例: 17:00-01:00）
+          if (endMin < startMin) {
+            endMs += 24 * 60 * 60 * 1000;
+          }
+          
+          return { startMs, endMs, start: t.start, end: t.end, dayKey, dayOffset };
+        });
+      }
+      
+      // 今日の営業時間
+      const todayPeriods = buildPeriods(todayKey, 0);
+      
+      // 昨日の営業時間のうち「日付またぎ」だけを引き継ぐ（深夜側）
+      const yesterdayPeriodsAll = buildPeriods(yesterdayKey, -1);
+      const yesterdaySpill = yesterdayPeriodsAll.filter(p => parseHHMM(p.end) < parseHHMM(p.start));
+      
+      const allPeriods = [...yesterdaySpill, ...todayPeriods];
+      
+      const active = allPeriods
+        .filter(p => nowMs >= p.startMs && nowMs < p.endMs)
+        .sort((a, b) => a.endMs - b.endMs)[0];
+      
+      if (!active) return { state: 'closed', closesAt: null };
+      
+      const minutesLeft = (active.endMs - nowMs) / 60000;
+      
+      // 閉店1時間前だけ「閉店間近」
+      if (minutesLeft > 0 && minutesLeft <= 60) {
+        return { state: 'soon', closesAt: new Date(active.endMs) };
+      }
+      return { state: 'open', closesAt: new Date(active.endMs) };
+    }
+    
+    // 既存コード互換用（フィルタで使ってるので残す）
     function isOpenNow(openingHours) {
-      if (!openingHours) return false;
-      
-      const now = new Date();
-      const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-      const today = days[now.getDay()];
-      const currentTime = now.getHours() * 60 + now.getMinutes();
-      
-      const todayHours = openingHours[today];
-      if (!todayHours || !todayHours.times || todayHours.times.length === 0) return false;
-      
-      return todayHours.times.some(period => {
-        const [startH, startM] = period.start.split(':').map(Number);
-        const [endH, endM] = period.end.split(':').map(Number);
-        const startTime = startH * 60 + startM;
-        let endTime = endH * 60 + endM;
-        
-        if (endTime < startTime) endTime += 24 * 60;
-        
-        return currentTime >= startTime && currentTime < endTime;
-      });
+      return getOpenStatus(openingHours).state !== 'closed';
     }
     
     function getTodayHours(openingHours) {
