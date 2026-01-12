@@ -6,6 +6,22 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="家系ラーメン店を探して記録するアプリ">
+  <meta name="theme-color" content="#C41E3A">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- iOS Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-40.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-29.png">
+  
   <title>🍜 家系ラーメン巡り</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
   <style>
@@ -1827,6 +1843,17 @@
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // Service Worker登録（PWA対応）
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker登録成功:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Service Worker登録失敗:', error);
+          });
+      }
+      
       initMap();
       initTabs();
       renderShopList();
