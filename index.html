@@ -582,6 +582,97 @@
       flex-shrink: 0;
     }
     
+    .share-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      color: #6b7280;
+      transition: all 0.2s;
+    }
+    
+    .share-btn:active {
+      background: #e5e7eb;
+      transform: scale(0.95);
+    }
+    
+    /* Share Modal */
+    .share-modal-content {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    .share-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .share-modal-header h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+      margin: 0;
+    }
+    
+    .share-modal-body {
+      padding: 16px;
+    }
+    
+    .share-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border: none;
+      background: white;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: #1f2937;
+      border: 1.5px solid #e5e7eb;
+    }
+    
+    .share-option:active {
+      background: #f9fafb;
+      transform: scale(0.98);
+    }
+    
+    .share-option svg {
+      flex-shrink: 0;
+    }
+    
+    .share-option:nth-child(1) svg {
+      color: #000000;
+    }
+    
+    .share-option:nth-child(2) svg {
+      color: #06C755;
+    }
+    
+    .share-option:nth-child(3) svg {
+      color: #6b7280;
+    }
+    
     .modal-body {
       padding: 0 16px 24px;
     }
@@ -1008,116 +1099,261 @@
     /* Lineage Tab */
     .lineage-container {
       padding: 16px;
+      background: #f9fafb;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
     
-    .lineage-card {
+    /* 検索バー */
+    .lineage-search-container {
+      padding: 16px;
+      padding-bottom: 8px;
+      background: #f9fafb;
+      position: relative;
+    }
+    
+    .lineage-search-input {
+      width: 100%;
+      padding: 10px 40px 10px 12px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
       background: white;
-      border-radius: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      padding: 24px;
+      transition: border-color 0.2s;
     }
     
-    .lineage-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 24px;
+    .lineage-search-input:focus {
+      outline: none;
+      border-color: #C41E3A;
     }
     
-    .lineage-root {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-    
-    .lineage-node {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    .lineage-search-clear {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: #9ca3af;
       color: white;
-      padding: 16px 32px;
-      border-radius: 16px;
-      font-weight: bold;
+      border-radius: 50%;
       font-size: 16px;
-      box-shadow: 0 4px 12px rgba(239,68,68,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
     }
     
-    .lineage-line {
-      width: 2px;
-      height: 48px;
+    .lineage-search-clear:active {
+      background: #6b7280;
+    }
+    
+    /* 検索ハイライト */
+    .lineage-shop-card.search-match {
+      border-color: #C41E3A;
+      background: #fef2f2;
+    }
+    
+    .lineage-shop-card.search-dimmed {
+      opacity: 0.4;
+    }
+    
+    /* ルートカード（吉村家） */
+    .lineage-root-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .lineage-root-icon {
+      font-size: 32px;
+      margin-bottom: 6px;
+    }
+    
+    .lineage-root-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f2937;
+      margin-bottom: 4px;
+    }
+    
+    .lineage-root-subtitle {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    /* ツリー構造 */
+    .lineage-tree {
+      background: white;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* カテゴリセクション */
+    .lineage-category-section {
+      margin-bottom: 12px;
+    }
+    
+    .lineage-category-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .lineage-category-header:active {
+      background: #e5e7eb;
+    }
+    
+    .lineage-category-toggle {
+      font-size: 12px;
+      color: #6b7280;
+      width: 16px;
+      text-align: center;
+    }
+    
+    .lineage-category-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #1f2937;
+      flex: 1;
+    }
+    
+    .lineage-category-count {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .lineage-category-content {
+      margin-top: 8px;
+      padding-left: 8px;
+    }
+    
+    .lineage-item {
+      margin-bottom: 8px;
+      position: relative;
+    }
+    
+    .lineage-item::before {
+      content: '';
+      position: absolute;
+      left: -16px;
+      top: 14px;
+      width: 16px;
+      height: 1px;
       background: #d1d5db;
     }
     
-    .lineage-section {
-      margin-bottom: 32px;
+    .lineage-shop-card {
+      background: white;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
     }
     
-    .lineage-section-title {
-      text-align: center;
-      font-weight: 600;
-      color: #4b5563;
-      margin-bottom: 16px;
-      font-size: 14px;
+    .lineage-shop-card:active {
+      border-color: #C41E3A;
+      box-shadow: 0 2px 8px rgba(196,30,58,0.2);
+      transform: scale(0.98);
     }
     
-    .lineage-shops {
+    .lineage-shop-card.visited {
+      border-color: #10b981;
+      background: #f0fdf4;
+    }
+    
+    .lineage-shop-main {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
     }
     
-    .lineage-shop {
-      padding: 12px 16px;
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    .lineage-toggle {
+      font-size: 10px;
+      color: #6b7280;
+      width: 16px;
       text-align: center;
-    }
-    
-    .lineage-shop.direct {
-      background: #dbeafe;
-      border: 1px solid #93c5fd;
-    }
-    
-    .lineage-shop.direct.visited {
-      background: #d1fae5;
-      border: 2px solid #10b981;
-    }
-    
-    .lineage-shop.derivative {
-      background: #f3e8ff;
-      border: 1px solid #d8b4fe;
-    }
-    
-    .lineage-shop.derivative.visited {
-      background: #d1fae5;
-      border: 2px solid #10b981;
+      flex-shrink: 0;
+      padding: 2px;
     }
     
     .lineage-shop-name {
       font-weight: 600;
       font-size: 13px;
       color: #1f2937;
-      margin-bottom: 4px;
+      flex: 1;
+    }
+    
+    .lineage-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    
+    .lineage-badge.直系 {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .lineage-badge.派生 {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .lineage-badge.有名店 {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+    
+    .lineage-badge.資本系 {
+      background: #f3f4f6;
+      color: #4b5563;
     }
     
     .lineage-shop-area {
       font-size: 11px;
       color: #6b7280;
+      margin-left: 22px;
     }
     
-    .lineage-legend {
-      margin-top: 24px;
-      padding: 16px;
-      background: #f9fafb;
+    .lineage-children {
+      margin-top: 6px;
+      border-left: 1.5px solid #e5e7eb;
+      padding-left: 12px;
+    }
+    
+    /* 吉村家系以外のセクション */
+    .lineage-other-section {
+      margin-top: 16px;
+      background: white;
       border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
-    .lineage-legend p {
+    .lineage-other-title {
       font-weight: 600;
+      color: #6b7280;
       margin-bottom: 8px;
-      font-size: 13px;
+      font-size: 12px;
+      text-align: center;
     }
     
-    .lineage-legend ul {
       list-style: none;
       font-size: 12px;
       color: #6b7280;
@@ -1295,30 +1531,17 @@
       
       <!-- Lineage Tab -->
       <div id="tab-lineage" class="tab-content">
-        <div class="lineage-container">
-          <div class="lineage-card">
-            <div class="lineage-title">家系ラーメン相関図</div>
-            <div class="lineage-root">
-              <div class="lineage-node">🍜 吉村家（総本山）</div>
-              <div class="lineage-line"></div>
-            </div>
-            <div class="lineage-section">
-              <div class="lineage-section-title">直系店</div>
-              <div class="lineage-shops" id="lineage-direct"></div>
-            </div>
-            <div class="lineage-section">
-              <div class="lineage-section-title">有名店・派生系</div>
-              <div class="lineage-shops" id="lineage-derivative"></div>
-            </div>
-            <div class="lineage-legend">
-              <p>凡例</p>
-              <ul>
-                <li>• 総本山: 家系ラーメン発祥の吉村家</li>
-                <li>• 直系店: 吉村家から直接暖簾分け</li>
-                <li>• 有名店・派生系: 吉村家以外から派生した店舗</li>
-              </ul>
-            </div>
-          </div>
+        <div class="lineage-search-container">
+          <input 
+            type="text" 
+            id="lineage-search" 
+            class="lineage-search-input" 
+            placeholder="店舗名で検索..."
+          />
+          <button class="lineage-search-clear" id="lineage-search-clear" style="display:none;">×</button>
+        </div>
+        <div class="lineage-container" id="lineage-direct">
+          <!-- JavaScriptで動的に生成 -->
         </div>
       </div>
       
@@ -1396,7 +1619,14 @@
               <span id="detail-area"></span>
             </div>
           </div>
-          <button class="close-btn" onclick="closeShopDetail()">✕</button>
+          <div style="display:flex;gap:8px;align-items:flex-start;">
+            <button class="share-btn" onclick="shareShop()" title="共有">
+              <svg style="width:20px;height:20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+              </svg>
+            </button>
+            <button class="close-btn" onclick="closeShopDetail()">✕</button>
+          </div>
         </div>
       </div>
       <div class="modal-body">
@@ -1643,7 +1873,7 @@
         area: "鶴屋町",
         lat: 35.4694779,
         lng: 139.6208343,
-        parent: "yoshimuraya",
+        parent: "sugitaya",
         description: "横浜駅近く鶴屋町の家系ラーメン店。深夜まで営業し、濃厚な豚骨醤油スープが特徴。",
         googleMapUrl: "https://www.google.com/maps/place/%E9%B6%B4%E4%B8%80%E5%AE%B6+neo/@35.4694779,139.6208343,15z/data=!4m6!3m5!1s0x60185dd1f76c0b3b:0x56351e864f67679e!8m2!3d35.4694779!4d139.6208343!16s%252Fg%252F11xkgw9v4y?hl=ja",
         websiteUrl: "",
@@ -1945,6 +2175,22 @@
         renderShopList();
       });
       
+      // 検索機能（Lineageタブ）
+      const lineageSearchInput = document.getElementById('lineage-search');
+      const lineageSearchClear = document.getElementById('lineage-search-clear');
+      
+      lineageSearchInput?.addEventListener('input', (e) => {
+        const hasValue = e.target.value.length > 0;
+        lineageSearchClear.style.display = hasValue ? 'flex' : 'none';
+        renderLineageTab();
+      });
+      
+      lineageSearchClear?.addEventListener('click', () => {
+        lineageSearchInput.value = '';
+        lineageSearchClear.style.display = 'none';
+        renderLineageTab();
+      });
+      
       // 営業中フィルタ
       document.getElementById('btn-open-toggle').addEventListener('click', () => {
         showOpenOnly = !showOpenOnly;
@@ -1982,6 +2228,9 @@
       
       // モーダルのスワイプで閉じる
       initModalSwipe();
+      
+      // URLパラメータから店舗を自動表示
+      checkUrlParams();
     });
     
     // Tab Navigation
@@ -2546,28 +2795,168 @@
     
     // Lineage Tab
     function renderLineageTab() {
-      const directShops = shops.filter(s => s.category === '直系' && s.parent === 'yoshimuraya');
-      const derivativeShops = shops.filter(s => (s.category === '派生' || s.category === '有名店') && s.parent === 'yoshimuraya');
+      // 展開状態を管理（グローバル変数）
+      window.lineageExpanded = window.lineageExpanded || {};
       
-      document.getElementById('lineage-direct').innerHTML = directShops.map(shop => {
+      // 検索クエリを取得
+      const searchQuery = (document.getElementById('lineage-search')?.value || '').toLowerCase();
+      
+      // 店舗が検索にマッチするかチェック
+      const matchesSearch = (shop) => {
+        if (!searchQuery) return true;
+        return shop.name.toLowerCase().includes(searchQuery) || 
+               shop.area.toLowerCase().includes(searchQuery);
+      };
+      
+      // 子孫に検索マッチがあるかチェック（再帰）
+      const hasMatchingDescendant = (shopId) => {
+        const children = shops.filter(s => s.parent === shopId);
+        return children.some(child => 
+          matchesSearch(child) || hasMatchingDescendant(child.id)
+        );
+      };
+      
+      // parentを持つ店舗を階層的に整理
+      const buildTree = (parentId) => {
+        return shops
+          .filter(s => s.parent === parentId)
+          .sort((a, b) => {
+            const order = { '直系': 1, '派生': 2, '有名店': 3, '資本系': 4 };
+            return (order[a.category] || 9) - (order[b.category] || 9);
+          });
+      };
+      
+      // カテゴリごとにグループ化
+      const groupByCategory = (parentId) => {
+        const children = buildTree(parentId);
+        const grouped = {};
+        children.forEach(shop => {
+          if (!grouped[shop.category]) {
+            grouped[shop.category] = [];
+          }
+          grouped[shop.category].push(shop);
+        });
+        return grouped;
+      };
+      
+      // 店舗カードを生成
+      const renderShopCard = (shop, level = 0) => {
         const isVisited = visits[shop.id]?.logs?.length > 0;
+        const children = buildTree(shop.id);
+        const hasChildren = children.length > 0;
+        const isExpanded = window.lineageExpanded[shop.id];
+        
+        // 検索フィルタリング
+        const isMatch = matchesSearch(shop);
+        const hasMatchInDescendants = hasMatchingDescendant(shop.id);
+        
+        // 検索中で、自分も子孫もマッチしない場合は非表示
+        if (searchQuery && !isMatch && !hasMatchInDescendants) {
+          return '';
+        }
+        
+        // 検索中の場合、自動展開
+        const shouldExpand = searchQuery ? (isExpanded || hasMatchInDescendants) : isExpanded;
+        
+        // 検索ハイライトクラス
+        const searchClass = searchQuery ? (isMatch ? 'search-match' : 'search-dimmed') : '';
+        
         return `
-          <div class="lineage-shop direct ${isVisited ? 'visited' : ''}">
-            <div class="lineage-shop-name">${shop.name}</div>
-            <div class="lineage-shop-area">${shop.area}</div>
+          <div class="lineage-item" style="margin-left: ${level * 24}px;">
+            <div class="lineage-shop-card ${isVisited ? 'visited' : ''} ${searchClass}" onclick="showShopDetail('${shop.id}')">
+              <div class="lineage-shop-main">
+                ${hasChildren ? `<span class="lineage-toggle" onclick="event.stopPropagation(); toggleLineageShop('${shop.id}')">
+                  ${shouldExpand ? '▼' : '▶'}
+                </span>` : '<span style="width:16px;display:inline-block;"></span>'}
+                <div class="lineage-shop-name">${shop.name}</div>
+                <span class="lineage-badge ${shop.category}">${shop.category}</span>
+              </div>
+              <div class="lineage-shop-area">${shop.area}</div>
+            </div>
+            ${hasChildren && shouldExpand ? `
+              <div class="lineage-children">
+                ${children.map(child => renderShopCard(child, level + 1)).join('')}
+              </div>
+            ` : ''}
           </div>
         `;
-      }).join('');
+      };
       
-      document.getElementById('lineage-derivative').innerHTML = derivativeShops.map(shop => {
-        const isVisited = visits[shop.id]?.logs?.length > 0;
+      // カテゴリセクションを生成
+      const renderCategorySection = (category, shops) => {
+        const categoryId = `category-${category}`;
+        
+        // 検索中はカテゴリマッチがあれば自動展開
+        const hasMatch = searchQuery && shops.some(s => 
+          matchesSearch(s) || hasMatchingDescendant(s.id)
+        );
+        const isExpanded = searchQuery ? true : (window.lineageExpanded[categoryId] !== false);
+        
+        // 検索でフィルタされた店舗のみレンダリング
+        const renderedShops = shops.map(shop => renderShopCard(shop, 0)).filter(Boolean);
+        
+        // 検索中で、マッチする店舗がない場合はカテゴリごと非表示
+        if (searchQuery && renderedShops.length === 0) {
+          return '';
+        }
+        
         return `
-          <div class="lineage-shop derivative ${isVisited ? 'visited' : ''}">
-            <div class="lineage-shop-name">${shop.name}</div>
-            <div class="lineage-shop-area">${shop.area}</div>
+          <div class="lineage-category-section">
+            <div class="lineage-category-header" onclick="toggleLineageCategory('${categoryId}')">
+              <span class="lineage-category-toggle">${isExpanded ? '▼' : '▶'}</span>
+              <span class="lineage-category-title">📁 ${category}</span>
+              <span class="lineage-category-count">(${shops.length}店)</span>
+            </div>
+            ${isExpanded ? `
+              <div class="lineage-category-content">
+                ${renderedShops.join('')}
+              </div>
+            ` : ''}
           </div>
         `;
-      }).join('');
+      };
+      
+      // 吉村家の子をカテゴリ別に表示
+      const yoshimurayaChildren = groupByCategory('yoshimuraya');
+      const rootShops = buildTree(null).filter(s => s.id !== 'yoshimuraya');
+      
+      const html = `
+        <div class="lineage-root-card">
+          <div class="lineage-root-icon">🏮</div>
+          <div class="lineage-root-name">吉村家</div>
+          <div class="lineage-root-subtitle">家系ラーメンの総本山</div>
+        </div>
+        
+        <div class="lineage-tree">
+          ${Object.entries(yoshimurayaChildren).map(([category, shops]) => 
+            renderCategorySection(category, shops)
+          ).join('')}
+        </div>
+        
+        ${rootShops.length > 0 ? `
+          <div class="lineage-other-section">
+            <div class="lineage-other-title">吉村家系以外</div>
+            ${rootShops.map(shop => renderShopCard(shop, 0)).join('')}
+          </div>
+        ` : ''}
+      `;
+      
+      document.getElementById('lineage-direct').innerHTML = html;
+    }
+    
+    // 店舗の展開/折りたたみ
+    function toggleLineageShop(shopId) {
+      window.lineageExpanded[shopId] = !window.lineageExpanded[shopId];
+      renderLineageTab();
+    }
+    
+    // カテゴリの展開/折りたたみ
+    function toggleLineageCategory(categoryId) {
+      if (window.lineageExpanded[categoryId] === undefined) {
+        window.lineageExpanded[categoryId] = true;
+      }
+      window.lineageExpanded[categoryId] = !window.lineageExpanded[categoryId];
+      renderLineageTab();
     }
     
     // Stats Tab
@@ -2737,6 +3126,74 @@
     function closeShopDetail() {
       document.getElementById('shop-detail-modal').classList.remove('active');
     }
+    
+    // シェア機能
+    function shareShop() {
+      if (!currentShop) return;
+      document.getElementById('share-modal').classList.add('active');
+    }
+    
+    function closeShareModal() {
+      document.getElementById('share-modal').classList.remove('active');
+    }
+    
+    function getShareText() {
+      if (!currentShop) return '';
+      
+      return `🍜 ${currentShop.name}\n📍 ${currentShop.area}\n\n#家系ラーメン #ラーメン`;
+    }
+    
+    function getShareUrl() {
+      const baseUrl = window.location.href.split('?')[0];
+      return `${baseUrl}?shop=${currentShop.id}`;
+    }
+    
+    function shareToX() {
+      const text = getShareText();
+      const url = getShareUrl();
+      const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=550,height=420');
+      closeShareModal();
+    }
+    
+    function shareToLine() {
+      const text = getShareText();
+      const url = getShareUrl();
+      const shareUrl = `https://line.me/R/share?text=${encodeURIComponent(text + '\n' + url)}`;
+      window.open(shareUrl, '_blank');
+      closeShareModal();
+    }
+    
+    function copyShareLink() {
+      const text = getShareText();
+      const url = getShareUrl();
+      const fullText = text + '\n\n' + url;
+      
+      navigator.clipboard.writeText(fullText).then(() => {
+        alert('リンクをコピーしました！');
+        closeShareModal();
+      }).catch(() => {
+        alert('コピーに失敗しました');
+      });
+    }
+    
+    // URLパラメータから店舗IDを取得して自動表示
+    function checkUrlParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const shopId = urlParams.get('shop');
+      if (shopId) {
+        const shop = shops.find(s => s.id === shopId);
+        if (shop) {
+          showShopDetail(shopId);
+        }
+      }
+    }
+    
+    window.shareShop = shareShop;
+    window.closeShareModal = closeShareModal;
+    window.shareToX = shareToX;
+    window.shareToLine = shareToLine;
+    window.copyShareLink = copyShareLink;
     
     function renderHours() {
       const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -3220,5 +3677,36 @@
     window.deleteVisitRecord = deleteVisitRecord;
     window.saveVisitRecord = saveVisitRecord;
   </script>
+  
+  <!-- Share Modal -->
+  <div id="share-modal" class="modal" onclick="closeShareModal()">
+    <div class="share-modal-content" onclick="event.stopPropagation()">
+      <div class="share-modal-header">
+        <h3>店舗を共有</h3>
+        <button class="close-btn" onclick="closeShareModal()">✕</button>
+      </div>
+      <div class="share-modal-body">
+        <button class="share-option" onclick="shareToX()">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span>Xでシェア</span>
+        </button>
+        <button class="share-option" onclick="shareToLine()">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+          </svg>
+          <span>LINEでシェア</span>
+        </button>
+        <button class="share-option" onclick="copyShareLink()">
+          <svg style="width:24px;height:24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <span>リンクをコピー</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
 </body>
 </html>
