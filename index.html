@@ -1054,6 +1054,7 @@
     /* List Tab */
     .list-container {
       padding: 16px;
+      padding-bottom: 70px;
     }
     
     .shop-card {
@@ -1101,6 +1102,7 @@
     /* Lineage Tab */
     .lineage-container {
       padding: 16px;
+      padding-bottom: 70px;
       background: #f9fafb;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
@@ -1368,6 +1370,7 @@
     /* Stats Tab */
     .stats-container {
       padding: 16px;
+      padding-bottom: 70px;
     }
     
     .stats-card {
@@ -1659,11 +1662,48 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.7.0</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.7.3</strong></div>
               <div class="version-date">最終更新: 2026/01/13</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.7.3 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.7.3</span>
+                  <span class="version-date-small">2026/01/13</span>
+                </div>
+                <ul class="version-list">
+                  <li>✂️ 全タブの下部余白を最適化（70pxに統一）</li>
+                  <li>✨ すっきりしたUIに改善</li>
+                </ul>
+              </div>
+              
+              <!-- v1.7.2 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.7.2</span>
+                  <span class="version-date-small">2026/01/13</span>
+                </div>
+                <ul class="version-list">
+                  <li>🔄 PWAキャッシュ更新問題を修正</li>
+                  <li>✂️ 統計タブの下部余白を調整</li>
+                </ul>
+              </div>
+              
+              <!-- v1.7.1 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.7.1</span>
+                  <span class="version-date-small">2026/01/13</span>
+                </div>
+                <ul class="version-list">
+                  <li>🏪 裏大輝家 青物横丁店を追加</li>
+                  <li>🌳 家系図に大輝家グループを反映</li>
+                  <li>📊 合計58店舗に</li>
+                </ul>
+              </div>
+              
               <!-- v1.7.0 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2349,6 +2389,48 @@
           fri: {times:[{start:"11:00",end:"16:00"},{start:"17:00",end:"21:00"}]},
           sat: {times:[{start:"11:00",end:"20:00"}]},
           sun: {times:[]}
+        }
+      },
+      {
+        id: "uradaikiya-aomono",
+        name: "裏大輝家 青物横丁店",
+        category: "派生",
+        area: "青物横丁",
+        lat: 35.6108836,
+        lng: 139.7419512,
+        parent: "daikiya-kamata",
+        description: "大輝家グループの2号店。",
+        googleMapUrl: "https://www.google.com/maps/place/%E8%A3%8F%E5%A4%A7%E8%BC%9D%E5%AE%B6+%E9%9D%92%E7%89%A9%E6%A8%AA%E4%B8%81%E5%BA%97/@35.6108836,139.7419512,17z",
+        websiteUrl: "https://twitter.com/daikiyaasahi",
+        openingHours: {
+          mon: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          tue: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          wed: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          thu: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          fri: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          sat: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          sun: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]}
+        }
+      },
+      {
+        id: "uradaikiya-aomono",
+        name: "裏大輝家 青物横丁店",
+        category: "派生",
+        area: "青物横丁",
+        lat: 35.6108836,
+        lng: 139.7419512,
+        parent: "daikiya-kamata",
+        description: "大輝家グループの2号店。",
+        googleMapUrl: "https://www.google.com/maps/place/%E8%A3%8F%E5%A4%A7%E8%BC%9D%E5%AE%B6+%E9%9D%92%E7%89%A9%E6%A8%AA%E4%B8%81%E5%BA%97/@35.6108836,139.7419512,17z",
+        websiteUrl: "https://twitter.com/daikiyaasahi",
+        openingHours: {
+          mon: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          tue: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          wed: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          thu: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          fri: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          sat: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
+          sun: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]}
         }
       },
     ];
