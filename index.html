@@ -1360,6 +1360,7 @@
       text-align: center;
     }
     
+    .lineage-legend {
       list-style: none;
       font-size: 12px;
       color: #6b7280;
@@ -1563,6 +1564,7 @@
                   <option value="総本山">総本山</option>
                   <option value="直系">直系</option>
                   <option value="有名店">有名店</option>
+                  <option value="王道家">王道家</option>
                   <option value="派生">派生</option>
                   <option value="資本系">資本系</option>
                   <option value="不明">不明</option>
@@ -1604,6 +1606,7 @@
               <option value="総本山">総本山</option>
               <option value="直系">直系</option>
               <option value="有名店">有名店</option>
+              <option value="王道家">王道家</option>
               <option value="派生">派生</option>
               <option value="資本系">資本系</option>
               <option value="不明">不明</option>
@@ -1664,11 +1667,74 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.7.7</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.9.0</strong></div>
               <div class="version-date">最終更新: 2026/01/15</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.9.0 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.9.0</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>🔔 更新通知機能を追加（HTMLのみ）</li>
+                  <li>🔄 PWA更新問題を解決</li>
+                  <li>📱 自動バージョンチェック</li>
+                </ul>
+              </div>
+              
+              <!-- v1.8.3 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.8.3</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>🕐 深夜またぎの閉店時刻計算を修正</li>
+                  <li>📍 位置情報チェックを厳密化</li>
+                </ul>
+              </div>
+              
+              <!-- v1.8.2 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.8.2</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 searchQuery未定義エラーを修正</li>
+                </ul>
+              </div>
+              
+              <!-- v1.8.1 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.8.1</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>✨ 営業判定ロジックを大幅改善（シンプル化）</li>
+                  <li>🔍 起動時データ検証を追加（重複防止）</li>
+                  <li>🧪 テスト可能な構造に</li>
+                </ul>
+              </div>
+              
+              <!-- v1.8.0 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.8.0</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 重複ID削除（裏大輝家）</li>
+                  <li>🎨 壊れたCSSを修正</li>
+                  <li>🆕 王道家カテゴリーを新設</li>
+                  <li>⏰ 深夜またぎ営業時間に対応済み確認</li>
+                </ul>
+              </div>
+              
               <!-- v1.7.7 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2121,6 +2187,63 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
+    // App Version (手動で更新)
+    const APP_VERSION = "1.9.0";
+    
+    // 更新チェック機能（HTMLのみ）
+    async function checkUpdate() {
+      try {
+        // サーバー上の最新版を取得（キャッシュバスト）
+        const res = await fetch(location.pathname + "?v=" + Date.now(), { cache: "no-store" });
+        const text = await res.text();
+        
+        // HTML内のAPP_VERSIONを抽出
+        const m = text.match(/const\s+APP_VERSION\s*=\s*["']([^"']+)["']/);
+        const remote = m ? m[1] : null;
+        
+        if (remote && remote !== APP_VERSION) {
+          showUpdateBanner(remote);
+        }
+      } catch (e) {
+        // オフライン時などは何もしない
+      }
+    }
+    
+    function showUpdateBanner(remoteVersion) {
+      const el = document.createElement("div");
+      el.style.position = "fixed";
+      el.style.left = "12px";
+      el.style.right = "12px";
+      el.style.bottom = "72px"; // 下タブの上
+      el.style.zIndex = "9999";
+      el.style.padding = "12px";
+      el.style.borderRadius = "12px";
+      el.style.background = "rgba(0,0,0,0.85)";
+      el.style.color = "#fff";
+      el.style.fontSize = "14px";
+      el.innerHTML = `
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+          <div>
+            <div style="font-weight:700;">更新があります</div>
+            <div style="opacity:.85;">${APP_VERSION} → ${remoteVersion}</div>
+          </div>
+          <button id="reloadBtn" style="padding:10px 12px;border-radius:10px;border:none;font-weight:700;background:#fff;cursor:pointer;">
+            再読み込み
+          </button>
+        </div>
+      `;
+      document.body.appendChild(el);
+      el.querySelector("#reloadBtn").onclick = () => {
+        // 強制リロード
+        location.reload();
+        // 念のため:URLを変えて再読込（キャッシュ突破）
+        setTimeout(() => location.replace(location.pathname + "?r=" + Date.now()), 200);
+      };
+    }
+    
+    // 起動後800ms後にチェック（初回レンダ優先）
+    window.addEventListener("load", () => setTimeout(checkUpdate, 800));
+    
     // Shop Data
     const shops = [
       {
@@ -2273,7 +2396,7 @@
       {
         id: "oudou-torakichihikari",
         name: "とらきち家 光",
-        category: "派生(王道家)",
+        category: "王道家",
         area: "六角橋",
         lat: 35.4847199,
         lng: 139.609521,
@@ -2459,27 +2582,6 @@
           sun: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]}
         }
       },
-      {
-        id: "uradaikiya-aomono",
-        name: "裏大輝家 青物横丁店",
-        category: "派生",
-        area: "青物横丁",
-        lat: 35.6108836,
-        lng: 139.7419512,
-        parent: "daikiya-kamata",
-        description: "大輝家グループの2号店。",
-        googleMapUrl: "https://www.google.com/maps/place/%E8%A3%8F%E5%A4%A7%E8%BC%9D%E5%AE%B6+%E9%9D%92%E7%89%A9%E6%A8%AA%E4%B8%81%E5%BA%97/@35.6108836,139.7419512,17z",
-        websiteUrl: "https://twitter.com/daikiyaasahi",
-        openingHours: {
-          mon: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          tue: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          wed: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          thu: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          fri: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          sat: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]},
-          sun: {times:[{start:"11:00",end:"15:00"},{start:"17:00",end:"23:00"}]}
-        }
-      },
     ];
     
     // State
@@ -2494,10 +2596,57 @@
     let userLocation = null; // ユーザー位置
     let userMarker = null; // ユーザー位置マーカー
     let nearbyMode = false; // 今からモード
-    let searchQuery = ''; // 検索クエリ
+    
+    // 検索クエリ（タブ統一、v1.9.0で分離予定）
+    let searchQuery = '';
+    let searchQueryMap = '';  // 準備中
+    let searchQueryList = ''; // 準備中
+    
+    // Data Validation（起動時チェック）
+    function validateShopsData() {
+      const validCategories = ['総本山', '直系', '有名店', '王道家', '派生', '資本系', '不明'];
+      const ids = new Set();
+      const warnings = [];
+      
+      shops.forEach((shop, index) => {
+        // 1. ID重複チェック
+        if (ids.has(shop.id)) {
+          warnings.push(`⚠️ 重複ID: "${shop.id}" (${shop.name})`);
+        }
+        ids.add(shop.id);
+        
+        // 2. 位置情報欠損チェック（厳密版）
+        if (!Number.isFinite(shop.lat) || !Number.isFinite(shop.lng)) {
+          warnings.push(`⚠️ 位置情報欠損: ${shop.name} (lat: ${shop.lat}, lng: ${shop.lng})`);
+        }
+        
+        // 3. 営業時間欠損チェック
+        if (!shop.openingHours) {
+          warnings.push(`⚠️ 営業時間欠損: ${shop.name}`);
+        }
+        
+        // 4. カテゴリー表記ゆれチェック
+        if (!validCategories.includes(shop.category)) {
+          warnings.push(`⚠️ 不正なカテゴリー: "${shop.category}" in ${shop.name}`);
+        }
+      });
+      
+      if (warnings.length > 0) {
+        console.warn('🔍 データ検証で問題を検出しました:');
+        warnings.forEach(w => console.warn(w));
+        console.warn(`合計: ${warnings.length}件の警告`);
+      } else {
+        console.log('✅ データ検証OK: 全て正常です');
+      }
+      
+      return warnings;
+    }
     
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
+      // データ検証（起動時）
+      validateShopsData();
+      
       // Service Worker登録（PWA対応）
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
@@ -3945,81 +4094,110 @@
     
     // Utility Functions
     
-    function parseHHMM(str) {
-      const [h, m] = str.split(':').map(Number);
+    function parseHHMM(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
       return h * 60 + m;
     }
     
-    // 営業ステータスを返す: 'open' | 'soon' | 'closed'
-    // soon: 閉店1時間前
-    function getOpenStatus(openingHours, now = new Date()) {
-      if (!openingHours) return { state: 'closed', closesAt: null };
-      
-      const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-      const todayKey = dayKeys[now.getDay()];
-      const yesterdayKey = dayKeys[(now.getDay() + 6) % 7];
-      
-      const today0 = new Date(now);
-      today0.setHours(0, 0, 0, 0);
-      const today0Ms = today0.getTime();
-      const nowMs = now.getTime();
-      
-      function buildPeriods(dayKey, dayOffset) {
-        const day = openingHours[dayKey];
-        const times = day?.times || [];
-        const baseMs = today0Ms + dayOffset * 24 * 60 * 60 * 1000;
-        
-        return times.map(t => {
-          const startMin = parseHHMM(t.start);
-          const endMin = parseHHMM(t.end);
-          
-          let startMs = baseMs + startMin * 60 * 1000;
-          let endMs = baseMs + endMin * 60 * 1000;
-          
-          // 日付またぎ（例: 17:00-01:00）
-          if (endMin < startMin) {
-            endMs += 24 * 60 * 60 * 1000;
-          }
-          
-          return { startMs, endMs, start: t.start, end: t.end, dayKey, dayOffset };
-        });
-      }
-      
-      // 今日の営業時間
-      const todayPeriods = buildPeriods(todayKey, 0);
-      
-      // 昨日の営業時間のうち「日付またぎ」だけを引き継ぐ（深夜側）
-      const yesterdayPeriodsAll = buildPeriods(yesterdayKey, -1);
-      const yesterdaySpill = yesterdayPeriodsAll.filter(p => parseHHMM(p.end) < parseHHMM(p.start));
-      
-      const allPeriods = [...yesterdaySpill, ...todayPeriods];
-      
-      const active = allPeriods
-        .filter(p => nowMs >= p.startMs && nowMs < p.endMs)
-        .sort((a, b) => a.endMs - b.endMs)[0];
-      
-      if (!active) return { state: 'closed', closesAt: null };
-      
-      const minutesLeft = (active.endMs - nowMs) / 60000;
-      
-      // 24時間営業の判定（00:00-24:00）
-      const is24Hours = active.start === '00:00' && active.end === '24:00';
-      
-      // 24時間営業の場合は閉店間近を表示しない
-      if (is24Hours) {
-        return { state: 'open', closesAt: new Date(active.endMs) };
-      }
-      
-      // 閉店1時間前だけ「閉店間近」
-      if (minutesLeft > 0 && minutesLeft <= 60) {
-        return { state: 'soon', closesAt: new Date(active.endMs) };
-      }
-      return { state: 'open', closesAt: new Date(active.endMs) };
+    function getDayKey(date = new Date()) {
+      const d = date.getDay(); // 0 Sun ... 6 Sat
+      return ['sun','mon','tue','wed','thu','fri','sat'][d];
     }
     
-    // 既存コード互換用（フィルタで使ってるので残す）
-    function isOpenNow(openingHours) {
-      return getOpenStatus(openingHours).state !== 'closed';
+    /**
+     * 営業中かどうかを判定
+     * openingHours: { mon:{times:[{start,end},...]}, ... }
+     * 24hは start:"00:00", end:"24:00" 前提
+     */
+    function isOpenNow(openingHours, now = new Date()) {
+      if (!openingHours) return false;
+
+      const dayKey = getDayKey(now);
+      const yesterdayKey = getDayKey(new Date(now.getTime() - 24*60*60*1000));
+
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+
+      // 今日の枠 + 「昨日からの深夜またぎ枠」を見る
+      const todayTimes = openingHours[dayKey]?.times || [];
+      const yTimes = openingHours[yesterdayKey]?.times || [];
+
+      // 今日枠判定
+      for (const t of todayTimes) {
+        const s = parseHHMM(t.start);
+        const e = parseHHMM(t.end);
+
+        if (t.start === "00:00" && t.end === "24:00") return true;
+
+        if (e > s) {
+          // 通常
+          if (nowMin >= s && nowMin < e) return true;
+        } else if (e < s) {
+          // 深夜またぎ（例 10:00-07:00 → 今日の 10:00〜24:00 部分）
+          if (nowMin >= s) return true;
+        }
+      }
+
+      // 昨日枠の深夜またぎ判定（例 昨日の 10:00-07:00 → 今日の 00:00〜07:00 部分）
+      for (const t of yTimes) {
+        const s = parseHHMM(t.start);
+        const e = parseHHMM(t.end);
+        if (e < s) {
+          if (nowMin < e) return true;
+        }
+      }
+
+      return false;
+    }
+    
+    /**
+     * 3段階（closed / open / soon）の営業ステータスを返す
+     * soonMinutes: 閉店何分前から「閉店間近」にするか（デフォルト30分）
+     */
+    function getOpenStatus(openingHours, now = new Date(), soonMinutes = 30) {
+      const open = isOpenNow(openingHours, now);
+      if (!open) return { state: 'closed', closesAt: null, closeIn: null };
+
+      // 「いつ閉まるか」を算出（今日枠 or 昨日からの深夜枠）
+      const dayKey = getDayKey(now);
+      const yesterdayKey = getDayKey(new Date(now.getTime() - 24*60*60*1000));
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+
+      const todayTimes = openingHours[dayKey]?.times || [];
+      const yTimes = openingHours[yesterdayKey]?.times || [];
+
+      let closeIn = Infinity;
+
+      // 今日の枠
+      for (const t of todayTimes) {
+        const s = parseHHMM(t.start);
+        const e = parseHHMM(t.end);
+        if (t.start === "00:00" && t.end === "24:00") return { state: 'open', closesAt: null, closeIn: null };
+
+        if (e > s) {
+          if (nowMin >= s && nowMin < e) closeIn = Math.min(closeIn, e - nowMin);
+        } else if (e < s) {
+          // 深夜またぎ：閉店は「翌日の end」
+          // 例 10:00-07:00 で 23:00 なら、(24:00-23:00)+07:00 = 8時間
+          if (nowMin >= s) {
+            closeIn = Math.min(closeIn, (24 * 60 - nowMin) + e);
+          }
+        }
+      }
+
+      // 昨日からの深夜またぎ枠
+      for (const t of yTimes) {
+        const s = parseHHMM(t.start);
+        const e = parseHHMM(t.end);
+        if (e < s) {
+          if (nowMin < e) closeIn = Math.min(closeIn, e - nowMin);
+        }
+      }
+
+      // closesAt を計算（closeIn分後の時刻）
+      const closesAt = closeIn < Infinity ? new Date(now.getTime() + closeIn * 60 * 1000) : null;
+
+      if (closeIn <= soonMinutes) return { state: 'soon', closesAt, closeIn };
+      return { state: 'open', closesAt, closeIn };
     }
     
     function getTodayHours(openingHours) {
