@@ -87,8 +87,8 @@
       display: flex;
       background: white;
       border-top: 1px solid #e5e7eb;
-      padding: 0;
-      padding-bottom: env(safe-area-inset-bottom);
+      padding: 4px 0;
+      padding-bottom: 8px;
     }
     
     .nav-item {
@@ -96,7 +96,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2px 8px;
+      padding: 4px 8px;
       border: none;
       background: none;
       cursor: pointer;
@@ -1662,11 +1662,22 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.7.5</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.7.6</strong></div>
               <div class="version-date">最終更新: 2026/01/15</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.7.6 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.7.6</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>✂️ 下部ナビバーの下の余白のみを削減</li>
+                </ul>
+              </div>
+              
               <!-- v1.7.5 -->
               <div class="version-section">
                 <div class="version-header">
