@@ -1667,11 +1667,23 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.9.0</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.10.0</strong></div>
               <div class="version-date">最終更新: 2026/01/15</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.10.0 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.10.0</span>
+                  <span class="version-date-small">2026/01/15</span>
+                </div>
+                <ul class="version-list">
+                  <li>🗺️ MAPタブのリストを地図表示範囲に連動</li>
+                  <li>🔄 地図を動かすと自動でリスト更新</li>
+                </ul>
+              </div>
+              
               <!-- v1.9.0 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2188,7 +2200,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
     // App Version (手動で更新)
-    const APP_VERSION = "1.9.0";
+    const APP_VERSION = "1.10.0";
     
     // 更新チェック機能（HTMLのみ）
     async function checkUpdate() {
@@ -2923,6 +2935,12 @@
         maxZoom: 19
       }).addTo(map);
       
+      // 地図の移動/ズーム後にリストを更新
+      map.on('moveend', () => {
+        updateMarkers();
+        renderShopList(); // 地図の表示範囲に合わせてリストを更新
+      });
+      
       updateMarkers();
     }
     
@@ -3081,6 +3099,14 @@
         filteredShops = [...shops];
       } else {
         filteredShops = shops.filter(s => s.category === categoryFilter);
+      }
+      
+      // 🗺️ MAPタブ: 地図の表示範囲でフィルタリング
+      if (map) {
+        const bounds = map.getBounds();
+        filteredShops = filteredShops.filter(shop => {
+          return bounds.contains([shop.lat, shop.lng]);
+        });
       }
       
       // 検索フィルター
