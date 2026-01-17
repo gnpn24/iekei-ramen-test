@@ -1687,11 +1687,24 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.13.10</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.13.11</strong></div>
               <div class="version-date">最終更新: 2026/01/16</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.13.11 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.13.11</span>
+                  <span class="version-date-small">2026/01/16</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 scrollTopで確実にスクロール</li>
+                  <li>⚡ 待機時間を最適化</li>
+                  <li>✅ Step 4が確実に動作</li>
+                </ul>
+              </div>
+              
               <!-- v1.13.10 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2464,7 +2477,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
     // App Version (手動で更新)
-    const APP_VERSION = "1.13.10";
+    const APP_VERSION = "1.13.11";
     
     // 更新チェック機能（HTMLのみ）
     async function checkUpdate() {
@@ -3459,22 +3472,34 @@
             
             // 2秒後にStep 4へ
             setTimeout(() => {
+              console.log('Step 3→4: Transition starting');
+              
               removeTooltips();
               document.getElementById('tutorial-spotlight')?.remove();
               tutorialStep = tutorialSteps.VIEW_CHECKIN;
               showTutorialHeader(4, 4);
+              
+              console.log('Step 4: Header updated, tutorialStep =', tutorialStep);
               
               // 訪問記録までスクロール
               const detailModal = document.getElementById('shop-detail-modal');
               const modalBody = detailModal?.querySelector('.modal-body');
               const sections = modalBody?.querySelectorAll('.section');
               
+              console.log('Step 4: Modal elements', {
+                detailModal: !!detailModal,
+                modalBody: !!modalBody,
+                sectionsCount: sections?.length
+              });
+              
               // 「来店情報」セクションを探す
               let targetSection = null;
-              sections?.forEach(section => {
+              sections?.forEach((section, index) => {
                 const title = section.querySelector('.section-title');
+                console.log(`Step 4: Section ${index}:`, title?.textContent);
                 if (title && title.textContent.includes('来店情報')) {
                   targetSection = section;
+                  console.log('Step 4: Found 来店情報 section at index', index);
                 }
               });
               
@@ -3487,15 +3512,18 @@
               if (targetSection && modalBody) {
                 // modal-body内でスクロール
                 const targetPosition = targetSection.offsetTop - modalBody.offsetTop;
-                modalBody.scrollTo({
-                  top: targetPosition,
-                  behavior: 'smooth'
-                });
                 
-                console.log('Step 4: Scrolled to', targetPosition);
+                // scrollTopを直接設定（より確実）
+                modalBody.scrollTop = targetPosition;
+                
+                console.log('Step 4: Scrolled to', targetPosition, 'scrollTop =', modalBody.scrollTop);
+              } else {
+                console.error('Step 4: Cannot scroll - missing elements');
               }
               
               setTimeout(() => {
+                console.log('Step 4: After scroll wait, now finding button');
+                
                 // スクロール後に要素を再取得
                 const modal = document.getElementById('shop-detail-modal');
                 const body = modal?.querySelector('.modal-body');
@@ -3534,7 +3562,7 @@
                 } else {
                   console.error('Step 4: checkinBtn not found');
                 }
-              }, 800); // スクロール完了を待つために少し長めに
+              }, 500); // scrollTopは即座に反映
             }, 2000);
           }
         }, 500);
