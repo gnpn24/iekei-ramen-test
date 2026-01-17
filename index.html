@@ -89,9 +89,7 @@
       background: white;
       border-top: 1px solid #e5e7eb;
       padding: 4px 0;
-      /* 下部余白: 0pxだとiPhoneのホームインジケーターと重なる可能性あり */
-      /* 必要に応じて padding-bottom: 4px; や 8px; に調整 */
-      padding-bottom: 0;
+      padding-bottom: max(4px, env(safe-area-inset-bottom));
     }
     
     .nav-item {
@@ -1888,11 +1886,37 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.16.2</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.18.1</strong></div>
               <div class="version-date">最終更新: 2026/01/17</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.18.1 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.18.1</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🚨 チュートリアル専用マーカー表示を修正</li>
+                  <li>📱 iOS PWA対応（safe-area）</li>
+                  <li>✅ チュートリアルが正常に進む</li>
+                </ul>
+              </div>
+              
+              <!-- v1.18.0 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.18.0</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>❌ 地図表示範囲連動機能を削除</li>
+                  <li>✅ MAPタブで全店舗表示</li>
+                  <li>👍 シンプルな挙動に</li>
+                </ul>
+              </div>
+              
               <!-- v1.16.2 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2888,7 +2912,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
     // App Version (手動で更新)
-    const APP_VERSION = "1.16.2";
+    const APP_VERSION = "1.18.1";
     
     // 更新チェック機能（HTMLのみ）
     async function checkUpdate() {
@@ -3074,11 +3098,11 @@
         name: "銀家 横浜西口店",
         category: "資本系",
         area: "横浜駅西口",
-        lat: 35.4556113,
-        lng: 139.6110357,
+        lat: 35.463601,
+        lng: 139.6133207,
         parent: null,
         description: "",
-        googleMapUrl: "google.com/maps/place/横浜家系ラーメン+銀家+横浜西口パルナード店/@35.4556113,139.6110357,15z/data=!4m10!1m2!2m1!1z44GO44KT44KE!3m6!1s0x60185de49aa4258b:0x2912046c12810368!8m2!3d35.4648554!4d139.619411!15sCgnjgY7jgpPjgoRaDCIK44GO44KTIOOChJIBEHJhbWVuX3Jlc3RhdXJhbnSaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMnM0ZUZOdVdqTlJWRVpYVTIxU1YxRlZUakZSV0hCWVlsY3dkRTR4UlJBQuABAPoBBAgAEBs!16s%2Fg%2F11nnv02qyq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D",
+        googleMapUrl: "https://www.google.com/maps/place/%E6%A8%AA%E6%B5%9C%E5%AE%B6%E7%B3%BB%E3%83%A9%E3%83%BC%E3%83%A1%E3%83%B3+%E9%8A%80%E5%AE%B6+%E6%A8%AA%E6%B5%9C%E8%A5%BF%E5%8F%A3%E3%83%91%E3%83%AB%E3%83%8A%E3%83%BC%E3%83%89%E5%BA%97/@35.4636011,139.6133207,17z",
         websiteUrl: "https://www.ginya-web.com/",
         openingHours: {
           mon: {times:[{start:"00:00",end:"24:00"}]},
@@ -3096,7 +3120,7 @@
         category: "有名店",
         area: "東神奈川駅",
         lat: 35.4770278,
-        lng: 139.6362728,
+        lng: 139.6317667,
         parent: null,
         description: "",
         googleMapUrl: "",
@@ -3477,6 +3501,9 @@
       if (welcomeCard) welcomeCard.remove();
       if (welcomeOverlay) welcomeOverlay.remove();
       
+      // 開いているポップアップを閉じる
+      map.closePopup();
+      
       // bodyにクラスを追加
       document.body.classList.add('tutorial-active');
       
@@ -3488,6 +3515,7 @@
       
       // 吉村家にズーム
       tutorialStep = tutorialSteps.CLICK_PIN;
+      updateMarkers(); // チュートリアル専用マーカーを表示
       map.setView([35.4630187, 139.6150749], 16, { animate: true, duration: 1 });
       console.log('Zoomed to Yoshimuraya');
       
@@ -3679,7 +3707,10 @@
         z-index: 10000;
         background: white;
         border-bottom: 1px solid #e5e7eb;
-        padding: 12px 16px;
+        padding-top: max(12px, env(safe-area-inset-top));
+        padding-bottom: 12px;
+        padding-left: 16px;
+        padding-right: 16px;
         display: flex;
         justify-content: space-between;
         align-items: center;
