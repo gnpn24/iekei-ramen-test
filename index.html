@@ -1888,11 +1888,91 @@
           <div class="stats-card" style="margin-top:16px;">
             <div class="stats-title">📝 変更履歴</div>
             <div class="version-info">
-              <div class="version-current">現在のバージョン: <strong>v1.15.3</strong></div>
+              <div class="version-current">現在のバージョン: <strong>v1.16.2</strong></div>
               <div class="version-date">最終更新: 2026/01/17</div>
             </div>
             
             <div class="changelog">
+              <!-- v1.16.2 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.16.2</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>✨ 詳細モーダルを常にTOPから表示</li>
+                  <li>📜 スクロール位置を自動リセット</li>
+                  <li>👍 UX改善</li>
+                </ul>
+              </div>
+              
+              <!-- v1.16.1 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.16.1</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 2回目以降も完璧に動作</li>
+                  <li>📜 スクロール位置をリセット</li>
+                  <li>⏱️ 全タイマーを管理下に</li>
+                  <li>🎉 完璧な安定性</li>
+                </ul>
+              </div>
+              
+              <!-- v1.16.0 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.16.0</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 誘導カード2回表示を修正</li>
+                  <li>⏱️ タイマー管理システムを追加</li>
+                  <li>🛡️ 二重起動ガード実装</li>
+                  <li>🎉 完璧な安定性</li>
+                </ul>
+              </div>
+              
+              <!-- v1.15.6 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.15.6</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🎯 スポットライトの位置を完全修正</li>
+                  <li>✅ 赤枠がピッタリ合う</li>
+                  <li>🎉 チュートリアル完璧動作！</li>
+                </ul>
+              </div>
+              
+              <!-- v1.15.5 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.15.5</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 モーダルが正常に開くように修正</li>
+                  <li>✅ Step 2→3 が完璧に動作</li>
+                  <li>🎉 チュートリアル完全修正</li>
+                </ul>
+              </div>
+              
+              <!-- v1.15.4 -->
+              <div class="version-section">
+                <div class="version-header">
+                  <span class="version-number">v1.15.4</span>
+                  <span class="version-date-small">2026/01/17</span>
+                </div>
+                <ul class="version-list">
+                  <li>🐛 チュートリアル再起動を完全修正</li>
+                  <li>✅ モーダルが正常に表示</li>
+                  <li>🔄 状態を完全リセット</li>
+                </ul>
+              </div>
+              
               <!-- v1.15.3 -->
               <div class="version-section">
                 <div class="version-header">
@@ -2808,7 +2888,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
     // App Version (手動で更新)
-    const APP_VERSION = "1.15.3";
+    const APP_VERSION = "1.16.2";
     
     // 更新チェック機能（HTMLのみ）
     async function checkUpdate() {
@@ -2873,7 +2953,7 @@
         }
         
         // 強制リロード
-        setTimeout(() => {
+        tset(() => {
           location.reload(true);
         }, 100);
       };
@@ -3283,6 +3363,20 @@
     // チュートリアル（段階式ガイド）
     let tutorialActive = false;
     let tutorialStep = 0;
+    let tutorialTimers = [];  // チュートリアル用タイマーを管理
+    
+    // チュートリアル用setTimeout（管理下に置く）
+    function tset(fn, ms) {
+      const id = setTimeout(fn, ms);
+      tutorialTimers.push(id);
+      return id;
+    }
+    
+    // チュートリアルタイマーを全てクリア
+    function clearTutorialTimers() {
+      tutorialTimers.forEach(clearTimeout);
+      tutorialTimers = [];
+    }
     
     const tutorialSteps = {
       WELCOME: 0,
@@ -3295,6 +3389,13 @@
     
     function startTutorial() {
       console.log('startTutorial called');
+      
+      // 二重起動ガード
+      if (tutorialActive) {
+        console.log('Tutorial already active, skipping');
+        return;
+      }
+      
       if (localStorage.getItem('hasCompletedTutorial')) {
         console.log('Tutorial already completed, skipping');
         return;
@@ -3391,7 +3492,7 @@
       console.log('Zoomed to Yoshimuraya');
       
       // 少し待ってからスポットライト+吹き出し表示
-      setTimeout(() => {
+      tset(() => {
         console.log('Showing spotlight and tooltip');
         
         // 吉村家のマーカーを取得してスポットライト
@@ -3440,6 +3541,29 @@
       
       const rect = targetElement.getBoundingClientRect();
       const padding = 8; // くり抜きの余白
+      
+      // スポットライト作成ログ
+      console.log('★★★ createSpotlight ★★★');
+      console.log('★ Target element:', targetElement.id || targetElement.className, '★');
+      console.log('★ Position ★', {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+        bottom: rect.bottom,
+        right: rect.right
+      });
+      console.log('★ Window size ★', {
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight
+      });
+      console.log('★★ Spotlight rect (赤枠の位置) ★★', {
+        x: rect.left - padding,
+        y: rect.top - padding,
+        width: rect.width + padding * 2,
+        height: rect.height + padding * 2
+      });
+      console.log('★★★★★★★★★★★★★★★★★★★★');
       
       // SVGを作成
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -3699,10 +3823,19 @@
     }
     
     function skipTutorial() {
+      clearTutorialTimers();  // タイマーを全てクリア
       tutorialActive = false;
       
       // bodyからクラスを削除
       document.body.classList.remove('tutorial-active');
+      
+      // モーダルのスクロール位置をリセット
+      const detailModal = document.getElementById('shop-detail-modal');
+      const modalContent = detailModal?.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.scrollTop = 0;
+        console.log('★★ skipTutorial: Reset modal scrollTop to 0 ★★');
+      }
       
       // すべてのチュートリアル要素を削除
       document.getElementById('tutorial-welcome')?.remove();
@@ -3736,7 +3869,7 @@
       // 初回訪問時は誘導カードを表示
       const hasSeenGuide = localStorage.getItem('hasSeenNearbyGuide');
       if (!hasSeenGuide) {
-        setTimeout(() => {
+        tset(() => {
           showNearbyGuide();
           localStorage.setItem('hasSeenNearbyGuide', 'true');
         }, 1000);
@@ -3750,15 +3883,22 @@
         detailModal.style.display = 'none';
       }
       
-      skipTutorial(); // チュートリアル終了処理
-      
-      // 誘導カードを表示
-      setTimeout(() => showNearbyGuide(), 500);
+      skipTutorial(); // チュートリアル終了処理（誘導カードもここで表示される）
     }
     
     function showNearbyGuide() {
       // すでに表示されている場合は削除
       document.getElementById('nearby-guide')?.remove();
+      
+      // ボタンのスタイルをリセットする関数
+      function resetNearbyButtonStyle() {
+        const filterBtn = document.getElementById('btn-nearby');
+        if (filterBtn) {
+          filterBtn.style.animation = '';
+          filterBtn.style.background = '';
+          filterBtn.style.color = '';
+        }
+      }
       
       const guide = document.createElement('div');
       guide.id = 'nearby-guide';
@@ -3848,47 +3988,71 @@
       // クリックで「今から」ボタンを有効化
       guide.addEventListener('click', () => {
         guide.remove();
+        resetNearbyButtonStyle();  // スタイルをリセット
         
         // 「今から」ボタンを探して有効化
-        if (filterBtn) {
-          // アニメーションを停止
-          filterBtn.style.animation = '';
-          filterBtn.style.background = '';
-          filterBtn.style.color = '';
-          
-          if (!filterBtn.classList.contains('active')) {
-            filterBtn.click();
-          }
+        if (filterBtn && !filterBtn.classList.contains('active')) {
+          filterBtn.click();
         }
       });
       
       document.body.appendChild(guide);
       
       // 5秒後に自動で消える
-      setTimeout(() => {
+      tset(() => {
         if (guide.parentElement) {
           guide.style.opacity = '0';
           guide.style.transition = 'opacity 0.3s ease';
-          setTimeout(() => {
+          tset(() => {
             guide.remove();
-            
-            // ボタンのアニメーションも停止
-            if (filterBtn) {
-              filterBtn.style.animation = '';
-              filterBtn.style.background = '';
-              filterBtn.style.color = '';
-            }
+            resetNearbyButtonStyle();  // スタイルをリセット
           }, 300);
         }
       }, 5000);
     }
     
     function restartTutorial() {
+      clearTutorialTimers();  // タイマーを全てクリア
+      
+      // 開いているモーダルを全て閉じる
+      const shopDetailModal = document.getElementById('shop-detail-modal');
+      const recordModal = document.getElementById('record-modal');
+      const changelogModal = document.getElementById('changelog-modal');
+      
+      if (shopDetailModal) {
+        shopDetailModal.classList.remove('active');
+        shopDetailModal.style.display = '';  // displayをリセット
+        
+        // modal-contentのスクロール位置をリセット
+        const modalContent = shopDetailModal.querySelector('.modal-content');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
+      }
+      if (recordModal) {
+        recordModal.classList.remove('active');
+        recordModal.style.display = '';
+      }
+      if (changelogModal) {
+        changelogModal.classList.remove('active');
+        changelogModal.style.display = '';
+      }
+      
       // 既存のチュートリアルをクリーンアップ
       document.getElementById('tutorial-welcome')?.remove();
+      document.getElementById('welcome-overlay')?.remove();
       document.getElementById('tutorial-skip-btn')?.remove();
+      document.getElementById('tutorial-header')?.remove();
       document.getElementById('tutorial-overlay')?.remove();
+      document.getElementById('tutorial-spotlight')?.remove();
       removeTooltips();
+      
+      // bodyのクラスを削除
+      document.body.classList.remove('tutorial-active');
+      
+      // チュートリアル状態をリセット
+      tutorialActive = false;
+      tutorialStep = tutorialSteps.WELCOME;
       
       // マーカーのスタイルをリセット
       Object.keys(markers).forEach(shopId => {
@@ -3906,15 +4070,24 @@
       const mapTab = document.getElementById('tab-map');
       const tabs = document.querySelectorAll('.tab-content');
       tabs.forEach(tab => tab.classList.remove('active'));
-      mapTab.classList.add('active');
+      mapTab?.classList.add('active');
       
       const navItems = document.querySelectorAll('.nav-item');
       navItems.forEach(item => item.classList.remove('active'));
-      navItems[0].classList.add('active');
+      navItems[0]?.classList.add('active');
+      
+      // 地図をリセット
+      if (map) {
+        map.setView([35.45, 139.62], 11);
+      }
+      
+      // マーカーを再描画
+      updateMarkers();
       
       // チュートリアルを再開
       localStorage.removeItem('hasCompletedTutorial');
-      setTimeout(() => startTutorial(), 300);
+      localStorage.removeItem('hasSeenNearbyGuide');
+      tset(() => startTutorial(), 500);
     }
     
     // チュートリアル進行管理
@@ -3928,7 +4101,7 @@
         tutorialStep = tutorialSteps.CLICK_DETAIL;
         showTutorialHeader(2, 4);
         
-        setTimeout(() => {
+        tset(() => {
           // ポップアップ内の「詳細・訪問記録」ボタンをスポットライト
           const detailButton = document.getElementById('tutorial-detail-btn');
           
@@ -3950,15 +4123,49 @@
         tutorialStep = tutorialSteps.VIEW_INFO;
         showTutorialHeader(3, 4);
         
-        setTimeout(() => {
+        // モーダルのアニメーションが完了するまで待つ（500ms）
+        tset(() => {
+          console.log('★★★ Step 3: 営業時間スポットライト開始 ★★★');
+          
+          // モーダルの状態を確認
+          const detailModal = document.getElementById('shop-detail-modal');
+          const modalContent = detailModal?.querySelector('.modal-content');
+          
+          if (modalContent) {
+            console.log('★ Step 3: Modal scroll state ★', {
+              scrollTop: modalContent.scrollTop,
+              scrollHeight: modalContent.scrollHeight,
+              clientHeight: modalContent.clientHeight,
+              maxScroll: modalContent.scrollHeight - modalContent.clientHeight
+            });
+            console.log('★★ Step 3: scrollTop should be 0, actual:', modalContent.scrollTop, '★★');
+          }
+          
           // 営業時間をスポットライト
           const hoursSection = document.getElementById('detail-hours');
           if (hoursSection) {
-            createSpotlight(hoursSection);
-            showTooltip('hours-section', 'お店の情報が見られます');
+            const rect = hoursSection.getBoundingClientRect();
+            console.log('★ Step 3: Hours section position ★', {
+              top: rect.top,
+              bottom: rect.bottom,
+              left: rect.left,
+              right: rect.right,
+              width: rect.width,
+              height: rect.height,
+              visible: rect.top >= 0 && rect.top < window.innerHeight
+            });
+            console.log('★★ Step 3: Hours section is visible:', rect.top >= 0 && rect.top < window.innerHeight, '★★');
+            
+            // 位置が確定するまで少し待つ
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                createSpotlight(hoursSection);
+                showTooltip('hours-section', 'お店の情報が見られます');
+              });
+            });
             
             // 2秒後にStep 4へ
-            setTimeout(() => {
+            tset(() => {
               console.log('Step 3→4: Transition starting');
               
               removeTooltips();
@@ -4040,15 +4247,23 @@
                     const bodyRect = modalContent.getBoundingClientRect();
                     const btnRect2 = checkinButton.getBoundingClientRect();
                     
-                    // modalContentの「今のスクロール位置 + (ボタンの画面上の位置 - bodyの画面上の位置)」
-                    const targetTop = modalContent.scrollTop + (btnRect2.top - bodyRect.top) - 100;
+                    // 最大スクロール可能量
+                    const maxScroll = modalContent.scrollHeight - modalContent.clientHeight;
+                    
+                    // ボタンを画面に表示させるために必要なスクロール量
+                    // ボタンを画面下部から200px上に表示
+                    const targetTop = modalContent.scrollTop + (btnRect2.top - bodyRect.top) - (modalContent.clientHeight - 200);
+                    
+                    // 最大スクロール量を超えないように制限
+                    const finalScrollTop = Math.min(Math.max(0, targetTop), maxScroll);
                     
                     console.log('Step 4: Scroll calculation', {
                       bodyRect_top: bodyRect.top,
                       btnRect_top: btnRect2.top,
                       currentScrollTop: modalContent.scrollTop,
                       targetTop: targetTop,
-                      willScrollTo: Math.max(0, targetTop)
+                      maxScroll: maxScroll,
+                      finalScrollTop: finalScrollTop
                     });
                     
                     // 詳細ログ（展開されない場合用）
@@ -4056,28 +4271,29 @@
                     console.log('bodyRect.top:', bodyRect.top);
                     console.log('btnRect.top:', btnRect2.top);
                     console.log('current scrollTop:', modalContent.scrollTop);
+                    console.log('maxScroll:', maxScroll);
                     console.log('targetTop:', targetTop);
-                    console.log('will scroll to:', Math.max(0, targetTop));
+                    console.log('will scroll to:', finalScrollTop);
                     console.log('======================');
                     
-                    // スクロール実行
-                    console.log('→ Calling scrollTo with:', Math.max(0, targetTop));
-                    modalContent.scrollTo({
-                      top: Math.max(0, targetTop),
-                      behavior: 'smooth'
-                    });
-                    console.log('→ scrollTo called');
-                    
-                    // 実際のスクロール位置を確認
-                    setTimeout(() => {
-                      console.log('Step 4: After scroll', {
-                        scrollTop: modalContent.scrollTop
-                      });
-                      console.log('=== After Scroll ===');
-                      console.log('actual scrollTop:', modalContent.scrollTop);
-                      console.log('expected:', Math.max(0, targetTop));
-                      console.log('====================');
-                    }, 100);
+                    // レイアウトが完全に確定するまで待つ
+                    tset(() => {
+                      // スクロール実行（scrollTopに直接設定）
+                      console.log('→ Setting scrollTop to:', finalScrollTop);
+                      modalContent.scrollTop = finalScrollTop;
+                      console.log('→ scrollTop set, now:', modalContent.scrollTop);
+                      
+                      // 実際のスクロール位置を確認
+                      tset(() => {
+                        console.log('Step 4: After scroll', {
+                          scrollTop: modalContent.scrollTop
+                        });
+                        console.log('=== After Scroll ===');
+                        console.log('actual scrollTop:', modalContent.scrollTop);
+                        console.log('expected:', finalScrollTop);
+                        console.log('====================');
+                      }, 100);
+                    }, 200);
                   });
                 } else {
                   console.log('Step 4: Button not found');
@@ -4086,7 +4302,7 @@
                 console.error('Step 4: Cannot scroll - missing elements');
               }
               
-              setTimeout(() => {
+              tset(() => {
                 console.log('Step 4: After scroll wait, now finding button');
                 
                 // スクロール後に要素を再取得
@@ -4119,7 +4335,7 @@
                   showTooltip('checkin-button', '訪問記録を保存できます');
                   
                   // 2秒後に完了演出
-                  setTimeout(() => {
+                  tset(() => {
                     removeTooltips();
                     document.getElementById('tutorial-spotlight')?.remove();
                     showCompletionMessage();
@@ -4165,10 +4381,10 @@
       
       document.body.appendChild(message);
       
-      setTimeout(() => {
+      tset(() => {
         message.style.opacity = '0';
         message.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => {
+        tset(() => {
           message.remove();
           completeTutorial();
         }, 300);
@@ -4205,7 +4421,7 @@
       const shopParam = urlParams.get('shop');
       
       // チュートリアル（初回のみ、かつURLパラメータがない場合）
-      setTimeout(() => {
+      tset(() => {
         if (!shopParam && !localStorage.getItem('hasCompletedTutorial')) {
           startTutorial();
         }
@@ -4437,7 +4653,7 @@
           if (diff > 150 || (diff > 50 && velocity > 0.5)) {
             modalContent.style.transition = 'transform 0.3s ease';
             modalContent.style.transform = 'translateY(100%)';
-            setTimeout(() => {
+            tset(() => {
               closeFunc();
               modalContent.style.transform = '';
               modalContent.style.transition = '';
@@ -4446,7 +4662,7 @@
             // 元に戻す
             modalContent.style.transition = 'transform 0.3s ease';
             modalContent.style.transform = '';
-            setTimeout(() => {
+            tset(() => {
               modalContent.style.transition = '';
             }, 300);
           }
@@ -4467,12 +4683,6 @@
         attribution: '© OpenStreetMap',
         maxZoom: 19
       }).addTo(map);
-      
-      // 地図の移動/ズーム後にリストを更新
-      map.on('moveend', () => {
-        updateMarkers();
-        renderShopList(); // 地図の表示範囲に合わせてリストを更新
-      });
       
       updateMarkers();
       console.log('initMap completed');
@@ -4666,14 +4876,6 @@
         filteredShops = [...shops];
       } else {
         filteredShops = shops.filter(s => s.category === categoryFilter);
-      }
-      
-      // 🗺️ MAPタブ: 地図の表示範囲でフィルタリング
-      if (map) {
-        const bounds = map.getBounds();
-        filteredShops = filteredShops.filter(shop => {
-          return bounds.contains([shop.lat, shop.lng]);
-        });
       }
       
       // 検索フィルター
@@ -5186,8 +5388,13 @@
       currentShop = shops.find(s => s.id === shopId);
       if (!currentShop) return;
       
-      // チュートリアル進行
+      // チュートリアル中はモーダルのスクロール位置を必ずトップにリセット
       if (tutorialActive) {
+        const detailModal = document.getElementById('shop-detail-modal');
+        const modalContent = detailModal?.querySelector('.modal-content');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
         onShopDetailOpened(shopId);
       }
       
@@ -5288,7 +5495,30 @@
       document.getElementById('nav-google').href = 
         `https://www.google.com/maps/dir/?api=1&destination=${currentShop.lat},${currentShop.lng}`;
       
-      document.getElementById('shop-detail-modal').classList.add('active');
+      // モーダルを表示
+      const modal = document.getElementById('shop-detail-modal');
+      
+      // スクロールをTOPにリセット（チュートリアル中以外）
+      if (!tutorialActive) {
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+          modalContent.scrollTop = 0;
+        }
+      }
+      
+      modal.classList.add('active');
+      
+      // チュートリアル中は、モーダル表示後に必ずscrollTopをリセット
+      if (tutorialActive) {
+        // モーダルのアニメーションが開始した後にリセット
+        setTimeout(() => {
+          const modalContent = modal.querySelector('.modal-content');
+          if (modalContent) {
+            modalContent.scrollTop = 0;
+            console.log('★★ showShopDetail: Force reset scrollTop to 0 after modal shown ★★');
+          }
+        }, 50);
+      }
     }
     
     // グローバルスコープに公開（Leafletポップアップから呼び出すため）
@@ -5482,6 +5712,12 @@
     
     // Record Modal
     function openRecordModal() {
+      // チュートリアル中は訪問記録モーダルを開かない
+      if (tutorialActive) {
+        console.log('★★ Tutorial active: Cannot open record modal ★★');
+        return;
+      }
+      
       if (!currentShop) return;
       
       editingLogIndex = null; // 編集モードをリセット
@@ -5679,7 +5915,7 @@
       editingLogIndex = null; // 編集モードを即座にリセット
       
       // 画面を更新
-      setTimeout(() => {
+      tset(() => {
         updateMarkers();
         renderShopList(document.getElementById('filter-category').value);
         renderListTab();
