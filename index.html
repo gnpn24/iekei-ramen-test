@@ -6112,36 +6112,72 @@
     window.deleteVisitRecord = deleteVisitRecord;
     window.saveVisitRecord = saveVisitRecord;
   
-      // 🔍 デバッグ: Safe Area & Padding 確認
+      // 🔍 デバッグ: Safe Area & Padding 確認（画面表示）
       setTimeout(() => {
         const bottomNav = document.querySelector('.bottom-nav');
         if (bottomNav) {
           const computedStyle = window.getComputedStyle(bottomNav);
-          const safeAreaBottom = getComputedStyle(document.documentElement).getPropertyValue('--sab') || 
-                                 getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-bottom)');
-          
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('📱 Bottom Nav Debug Info');
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('🔹 padding:', computedStyle.padding);
-          console.log('🔹 padding-bottom:', computedStyle.paddingBottom);
-          console.log('🔹 height:', computedStyle.height);
-          console.log('🔹 env(safe-area-inset-bottom):', safeAreaBottom);
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('📐 Viewport Info');
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('🔹 window.innerHeight:', window.innerHeight);
-          console.log('🔹 document.documentElement.clientHeight:', document.documentElement.clientHeight);
-          console.log('🔹 100vh in px:', window.innerHeight);
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-          console.log('📏 Bottom Nav Position');
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
           const rect = bottomNav.getBoundingClientRect();
-          console.log('🔹 rect.top:', rect.top);
-          console.log('🔹 rect.bottom:', rect.bottom);
-          console.log('🔹 rect.height:', rect.height);
-          console.log('🔹 window.innerHeight - rect.bottom:', window.innerHeight - rect.bottom);
-          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          
+          // デバッグパネルを作成
+          const debugPanel = document.createElement('div');
+          debugPanel.id = 'debug-panel';
+          debugPanel.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.6;
+            z-index: 99999;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+          `;
+          
+          const gap = window.innerHeight - rect.bottom;
+          
+          debugPanel.innerHTML = `
+            <div style="font-size: 14px; font-weight: bold; margin-bottom: 12px; color: #00ffff;">
+              📱 Debug Info
+              <button onclick="this.parentElement.parentElement.remove()" style="
+                float: right;
+                background: #ff4444;
+                color: white;
+                border: none;
+                padding: 4px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+              ">閉じる</button>
+            </div>
+            
+            <div style="color: #ffff00; margin-top: 8px;">📱 Bottom Nav</div>
+            padding-bottom: <span style="color: #fff;">${computedStyle.paddingBottom}</span><br>
+            height: <span style="color: #fff;">${computedStyle.height}</span><br>
+            
+            <div style="color: #ffff00; margin-top: 8px;">📐 Viewport</div>
+            innerHeight: <span style="color: #fff;">${window.innerHeight}px</span><br>
+            
+            <div style="color: #ffff00; margin-top: 8px;">📏 Position</div>
+            rect.top: <span style="color: #fff;">${rect.top}px</span><br>
+            rect.bottom: <span style="color: #fff;">${rect.bottom}px</span><br>
+            rect.height: <span style="color: #fff;">${rect.height}px</span><br>
+            
+            <div style="color: #ffff00; margin-top: 8px; font-weight: bold;">
+              ⚠️ 画面下の余白
+            </div>
+            <div style="font-size: 16px; color: ${gap === 0 ? '#00ff00' : '#ff4444'}; font-weight: bold;">
+              ${gap}px ${gap === 0 ? '✅ 完璧！' : '❌ 余白あり'}
+            </div>
+          `;
+          
+          document.body.appendChild(debugPanel);
         }
       }, 2000);
     </script>
