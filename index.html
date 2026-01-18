@@ -4404,6 +4404,16 @@
         }
       }, 1000);
       
+      // チュートリアル完了後の誘導カード
+      if (urlParams.get('showGuide') === 'true') {
+        tset(() => {
+          showNearbyGuide();
+          localStorage.setItem('hasSeenNearbyGuide', 'true');
+          // URLからパラメータを削除（履歴をクリーンに）
+          window.history.replaceState({}, '', '/');
+        }, 1500);
+      }
+      
       // カテゴリーフィルタ
       document.getElementById('filter-category').addEventListener('change', () => {
         renderShopList();
@@ -6101,7 +6111,40 @@
     window.editVisitRecord = editVisitRecord;
     window.deleteVisitRecord = deleteVisitRecord;
     window.saveVisitRecord = saveVisitRecord;
-  </script>
+  
+      // 🔍 デバッグ: Safe Area & Padding 確認
+      setTimeout(() => {
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (bottomNav) {
+          const computedStyle = window.getComputedStyle(bottomNav);
+          const safeAreaBottom = getComputedStyle(document.documentElement).getPropertyValue('--sab') || 
+                                 getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-bottom)');
+          
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('📱 Bottom Nav Debug Info');
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('🔹 padding:', computedStyle.padding);
+          console.log('🔹 padding-bottom:', computedStyle.paddingBottom);
+          console.log('🔹 height:', computedStyle.height);
+          console.log('🔹 env(safe-area-inset-bottom):', safeAreaBottom);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('📐 Viewport Info');
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('🔹 window.innerHeight:', window.innerHeight);
+          console.log('🔹 document.documentElement.clientHeight:', document.documentElement.clientHeight);
+          console.log('🔹 100vh in px:', window.innerHeight);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('📏 Bottom Nav Position');
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          const rect = bottomNav.getBoundingClientRect();
+          console.log('🔹 rect.top:', rect.top);
+          console.log('🔹 rect.bottom:', rect.bottom);
+          console.log('🔹 rect.height:', rect.height);
+          console.log('🔹 window.innerHeight - rect.bottom:', window.innerHeight - rect.bottom);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        }
+      }, 2000);
+    </script>
   
   <!-- Share Modal -->
   <div id="share-modal" class="modal" onclick="closeShareModal()">
